@@ -14,6 +14,11 @@ use Nette;
 
 /**
  * HTTP-specific tasks.
+<<<<<<< HEAD
+=======
+ *
+ * @author     David Grudl
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
  */
 class Context
 {
@@ -35,7 +40,13 @@ class Context
 
 	/**
 	 * Attempts to cache the sent entity by its last modification date.
+<<<<<<< HEAD
 	 * @param  string|int|\DateTimeInterface  last modified time
+=======
+	 * @param  string|int|\DateTime  last modified time
+	 * @param  string  strong entity tag validator
+	 * @return bool
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function isModified($lastModified = null, string $etag = null): bool
 	{

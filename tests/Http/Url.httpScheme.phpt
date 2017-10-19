@@ -4,8 +4,11 @@
  * Test: Nette\Http\Url http://
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\Url;
 use Tester\Assert;
 
@@ -13,6 +16,7 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 
+<<<<<<< HEAD
 $url = new Url('http://username%3A:password%3A@hostn%61me:60/p%61th/script.php?%61rg=value#%61nchor');
 
 Assert::same('http://hostname:60/p%61th/script.php?arg=value#anchor', (string) $url);
@@ -55,3 +59,25 @@ Assert::same('?arg=value#anchor', $url->absoluteUrl);
 
 $url->setPath('');
 Assert::same('', $url->getPath());
+=======
+$url = new Url('http://username:password@hostname:60/path/script.php?arg=value#anchor');
+
+Assert::same('http://hostname:60/path/script.php?arg=value#anchor',  (string) $url);
+Assert::same('http',  $url->scheme);
+Assert::same('username',  $url->user);
+Assert::same('password',  $url->password);
+Assert::same('hostname',  $url->host);
+Assert::same(60,  $url->port);
+Assert::same('/path/script.php',  $url->path);
+Assert::same('/path/',  $url->basePath);
+Assert::same('arg=value',  $url->query);
+Assert::same('anchor',  $url->fragment);
+Assert::same('hostname:60',  $url->authority);
+Assert::same('http://hostname:60',  $url->hostUrl);
+Assert::same('http://hostname:60/path/script.php?arg=value#anchor',  $url->absoluteUrl);
+Assert::same('http://hostname:60/path/',  $url->baseUrl);
+Assert::same('script.php?arg=value#anchor',  $url->relativeUrl);
+
+$url->scheme = NULL;
+Assert::same('//username:password@hostname:60/path/script.php?arg=value#anchor',  $url->absoluteUrl);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1

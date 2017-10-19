@@ -4,9 +4,14 @@
  * Test: Nette\Http\Session error in session_start.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
 use Nette\Http\Session;
+=======
+use Nette\Http\Session;
+use Nette\Http\SessionSection;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Tester\Assert;
 
 

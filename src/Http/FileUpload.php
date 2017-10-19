@@ -17,12 +17,20 @@ use Nette;
  *
  * @property-read string $name
  * @property-read string $sanitizedName
+<<<<<<< HEAD
  * @property-read string|null $contentType
+=======
+ * @property-read string|NULL $contentType
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
  * @property-read int $size
  * @property-read string $temporaryFile
  * @property-read int $error
  * @property-read bool $ok
+<<<<<<< HEAD
  * @property-read string|null $contents
+=======
+ * @property-read string|NULL $contents
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
  */
 final class FileUpload
 {
@@ -79,6 +87,10 @@ final class FileUpload
 
 	/**
 	 * Returns the MIME content type of an uploaded file.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getContentType(): ?string
 	{
@@ -149,6 +161,7 @@ final class FileUpload
 		$dir = dirname($dest);
 		Nette\Utils\FileSystem::createDir($dir);
 		@unlink($dest); // @ - file may not exists
+<<<<<<< HEAD
 		Nette\Utils\Callback::invokeSafe(
 			is_uploaded_file($this->tmpName) ? 'move_uploaded_file' : 'rename',
 			[$this->tmpName, $dest],
@@ -156,6 +169,11 @@ final class FileUpload
 				throw new Nette\InvalidStateException("Unable to move uploaded file '$this->tmpName' to '$dest'. $message");
 			}
 		);
+=======
+		if (!call_user_func(is_uploaded_file($this->tmpName) ? 'move_uploaded_file' : 'rename', $this->tmpName, $dest)) {
+			throw new Nette\InvalidStateException("Unable to move uploaded file '$this->tmpName' to '$dest'.");
+		}
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		@chmod($dest, 0666); // @ - possible low permission to chmod
 		$this->tmpName = $dest;
 		return $this;
@@ -173,6 +191,10 @@ final class FileUpload
 
 	/**
 	 * Returns the image.
+<<<<<<< HEAD
+=======
+	 * @return Nette\Utils\Image
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 * @throws Nette\Utils\ImageException
 	 */
 	public function toImage(): Nette\Utils\Image
@@ -183,6 +205,10 @@ final class FileUpload
 
 	/**
 	 * Returns the dimensions of an uploaded image as array.
+<<<<<<< HEAD
+=======
+	 * @return array|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getImageSize(): ?array
 	{
@@ -192,6 +218,10 @@ final class FileUpload
 
 	/**
 	 * Get file contents.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getContents(): ?string
 	{

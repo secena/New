@@ -4,8 +4,11 @@
  * Test: Nette\Http\Url ftp://
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\Url;
 use Tester\Assert;
 
@@ -15,6 +18,7 @@ require __DIR__ . '/../bootstrap.php';
 
 $url = new Url('ftp://ftp.is.co.za/rfc/rfc3986.txt');
 
+<<<<<<< HEAD
 Assert::same('ftp', $url->scheme);
 Assert::same('', $url->user);
 Assert::same('', $url->password);
@@ -26,3 +30,16 @@ Assert::same('', $url->fragment);
 Assert::same('ftp.is.co.za', $url->authority);
 Assert::same('ftp://ftp.is.co.za', $url->hostUrl);
 Assert::same('ftp://ftp.is.co.za/rfc/rfc3986.txt', $url->absoluteUrl);
+=======
+Assert::same('ftp',  $url->scheme);
+Assert::same('',  $url->user);
+Assert::same('',  $url->password);
+Assert::same('ftp.is.co.za',  $url->host);
+Assert::same(21,  $url->port);
+Assert::same('/rfc/rfc3986.txt',  $url->path);
+Assert::same('',  $url->query);
+Assert::same('',  $url->fragment);
+Assert::same('ftp.is.co.za',  $url->authority);
+Assert::same('ftp://ftp.is.co.za',  $url->hostUrl);
+Assert::same('ftp://ftp.is.co.za/rfc/rfc3986.txt',  $url->absoluteUrl);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1

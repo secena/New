@@ -22,7 +22,11 @@ use Tracy\Dumper;
 </style>
 
 <div class="nette-SessionPanel">
+<<<<<<< HEAD
 	<h1>Session #<?= htmlspecialchars(session_id(), ENT_IGNORE, 'UTF-8') ?> (Lifetime: <?= htmlspecialchars(ini_get('session.cookie_lifetime'), ENT_NOQUOTES, 'UTF-8'); ?>)</h1>
+=======
+	<h1>Session #<?php echo htmlspecialchars(session_id(), ENT_IGNORE, 'UTF-8') ?> (Lifetime: <?php echo htmlspecialchars(ini_get('session.cookie_lifetime'), ENT_NOQUOTES, 'UTF-8'); ?>)</h1>
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 	<div class="tracy-inner">
 		<?php if (empty($_SESSION)):?>
@@ -37,7 +41,11 @@ use Tracy\Dumper;
 			} elseif ($k === '_tracy') {
 				continue;
 			}
+<<<<<<< HEAD
 			echo '<tr><th>', htmlspecialchars((string) $k, ENT_IGNORE, 'UTF-8'), '</th><td>', Dumper::toHtml($v, [Dumper::LIVE => true]), "</td></tr>\n";
+=======
+			echo '<tr><th>', htmlspecialchars($k, ENT_IGNORE, 'UTF-8'), '</th><td>', Dumper::toHtml($v), "</td></tr>\n";
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}?>
 		</table>
 		<?php endif ?>

@@ -25,9 +25,15 @@ use Nette;
  * @property-read Url|null $referer
  * @property-read bool $secured
  * @property-read bool $ajax
+<<<<<<< HEAD
  * @property-read string|null $remoteAddress
  * @property-read string|null $remoteHost
  * @property-read string|null $rawBody
+=======
+ * @property-read string|NULL $remoteAddress
+ * @property-read string|NULL $remoteHost
+ * @property-read string $rawBody
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
  */
 class Request implements IRequest
 {
@@ -51,10 +57,17 @@ class Request implements IRequest
 	/** @var array */
 	private $headers;
 
+<<<<<<< HEAD
 	/** @var string|null */
 	private $remoteAddress;
 
 	/** @var string|null */
+=======
+	/** @var string|NULL */
+	private $remoteAddress;
+
+	/** @var string|NULL */
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	private $remoteHost;
 
 	/** @var callable|null */
@@ -65,15 +78,26 @@ class Request implements IRequest
 		$headers = null, $method = null, $remoteAddress = null, $remoteHost = null, $rawBodyCallback = null)
 	{
 		$this->url = $url;
+<<<<<<< HEAD
 		if ($query !== null) {
 			trigger_error('Nette\Http\Request::__construct(): parameter $query is deprecated.', E_USER_DEPRECATED);
 			$url->setQuery($query);
+=======
+		if ($query === NULL) {
+			parse_str($url->getQuery(), $this->query);
+		} else {
+			$this->query = (array) $query;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}
 		$this->post = (array) $post;
 		$this->files = (array) $files;
 		$this->cookies = (array) $cookies;
 		$this->headers = array_change_key_case((array) $headers, CASE_LOWER);
+<<<<<<< HEAD
 		$this->method = $method ?: 'GET';
+=======
+		$this->method = $method;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		$this->remoteAddress = $remoteAddress;
 		$this->remoteHost = $remoteHost;
 		$this->rawBodyCallback = $rawBodyCallback;
@@ -126,7 +150,12 @@ class Request implements IRequest
 
 	/**
 	 * Returns uploaded file.
+<<<<<<< HEAD
 	 * @return FileUpload|array|null
+=======
+	 * @param  string key (or more keys)
+	 * @return FileUpload|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getFile(string $key)
 	{
@@ -192,11 +221,16 @@ class Request implements IRequest
 	 */
 	public function getHeader(string $header): ?string
 	{
+<<<<<<< HEAD
 		if (func_num_args() > 1) {
 			trigger_error(__METHOD__ . '() parameter $default is deprecated, use operator ??', E_USER_DEPRECATED);
 		}
 		$header = strtolower($header);
 		return $this->headers[$header] ?? null;
+=======
+		$header = strtolower($header);
+		return isset($this->headers[$header]) ? $this->headers[$header] : $default;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 
 
@@ -238,6 +272,10 @@ class Request implements IRequest
 
 	/**
 	 * Returns the IP address of the remote client.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getRemoteAddress(): ?string
 	{
@@ -247,6 +285,10 @@ class Request implements IRequest
 
 	/**
 	 * Returns the host of the remote client.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getRemoteHost(): ?string
 	{
@@ -269,6 +311,10 @@ class Request implements IRequest
 	/**
 	 * Parse Accept-Language header and returns preferred language.
 	 * @param  string[] supported languages
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function detectLanguage(array $langs): ?string
 	{

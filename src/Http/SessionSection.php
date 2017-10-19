@@ -40,6 +40,13 @@ class SessionSection implements \IteratorAggregate, \ArrayAccess
 	 */
 	public function __construct(Session $session, string $name)
 	{
+<<<<<<< HEAD
+=======
+		if (!is_string($name)) {
+			throw new Nette\InvalidArgumentException('Session namespace must be a string, ' . gettype($name) . ' given.');
+		}
+
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		$this->session = $session;
 		$this->name = $name;
 	}
@@ -155,7 +162,11 @@ class SessionSection implements \IteratorAggregate, \ArrayAccess
 
 	/**
 	 * Sets the expiration of the section or specific variables.
+<<<<<<< HEAD
 	 * @param  string|int|\DateTimeInterface
+=======
+	 * @param  string|int|\DateTime  time, value 0 means "until the browser is closed"
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 * @param  mixed   optional list of variables / single variable to expire
 	 * @return static
 	 */
@@ -166,12 +177,22 @@ class SessionSection implements \IteratorAggregate, \ArrayAccess
 			$time = Nette\Utils\DateTime::from($time)->format('U');
 			$max = (int) ini_get('session.gc_maxlifetime');
 			if ($max !== 0 && ($time - time() > $max + 3)) { // 0 - unlimited in memcache handler, 3 - bulgarian constant
+<<<<<<< HEAD
 				trigger_error("The expiration time is greater than the session expiration $max seconds");
+=======
+				trigger_error("The expiration time is greater than the session expiration $max seconds", E_USER_NOTICE);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 			}
 		}
 
+<<<<<<< HEAD
 		foreach (is_array($variables) ? $variables : [$variables] as $variable) {
 			$this->meta[$variable]['T'] = $time ?: null;
+=======
+		foreach (is_array($variables) ? $variables : array($variables) as $variable) {
+			$this->meta[$variable]['T'] = $time;
+			$this->meta[$variable]['B'] = $whenBrowserIsClosed;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}
 		return $this;
 	}
@@ -184,8 +205,13 @@ class SessionSection implements \IteratorAggregate, \ArrayAccess
 	public function removeExpiration($variables = null): void
 	{
 		$this->start();
+<<<<<<< HEAD
 		foreach (is_array($variables) ? $variables : [$variables] as $variable) {
 			unset($this->meta[$variable]['T']);
+=======
+		foreach (is_array($variables) ? $variables : array($variables) as $variable) {
+			unset($this->meta['']['T'], $this->meta['']['B']);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}
 	}
 

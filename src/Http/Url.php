@@ -266,7 +266,11 @@ class Url implements \JsonSerializable
 	/**
 	 * Appends the query part of URI.
 	 * @param  string|array
+<<<<<<< HEAD
 	 * @return static
+=======
+	 * @return self
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function appendQuery($value)
 	{
@@ -404,10 +408,15 @@ class Url implements \JsonSerializable
 	/**
 	 * URL comparison.
 	 * @param  string|self
+<<<<<<< HEAD
+=======
+	 * @return bool
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function isEqual($url): bool
 	{
 		$url = new self($url);
+<<<<<<< HEAD
 		$query = $url->query;
 		ksort($query);
 		$query2 = $this->query;
@@ -421,11 +430,27 @@ class Url implements \JsonSerializable
 			&& self::unescape($url->path, '%/') === self::unescape($this->path, '%/')
 			&& $query === $query2
 			&& $url->fragment === $this->fragment;
+=======
+		parse_str($url->query, $query);
+		ksort($query);
+		parse_str($this->query, $query2);
+		ksort($query2);
+		$http = in_array($this->scheme, array('http', 'https'), TRUE);
+		return $url->scheme === $this->scheme
+			&& !strcasecmp(rawurldecode($url->host), rawurldecode($this->host))
+			&& $url->port === $this->port
+			&& ($http || rawurldecode($url->user) === rawurldecode($this->user))
+			&& ($http || rawurldecode($url->pass) === rawurldecode($this->pass))
+			&& self::unescape($url->path, '%/') === self::unescape($this->path, '%/')
+			&& $query === $query2
+			&& rawurldecode($url->fragment) === rawurldecode($this->fragment);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 
 
 	/**
 	 * Transforms URL to canonical form.
+<<<<<<< HEAD
 	 * @return static
 	 */
 	public function canonicalize()
@@ -436,6 +461,15 @@ class Url implements \JsonSerializable
 			self::unescape($this->path, '%/')
 		);
 		$this->host = strtolower($this->host);
+=======
+	 * @return self
+	 */
+	public function canonicalize()
+	{
+		$this->path = $this->path === '' ? '/' : self::unescape($this->path, '%/#?');
+		$this->host = strtolower(rawurldecode($this->host));
+		$this->query = self::unescape(strtr($this->query, '+', ' '), '%&;=+#');
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		return $this;
 	}
 
@@ -454,6 +488,12 @@ class Url implements \JsonSerializable
 
 	/**
 	 * Similar to rawurldecode, but preserves reserved chars encoded.
+<<<<<<< HEAD
+=======
+	 * @param  string to decode
+	 * @param  string reserved characters
+	 * @return string
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public static function unescape(string $s, string $reserved = '%;/?:@&=+$,'): string
 	{

@@ -7,8 +7,11 @@
 
 declare(strict_types=1);
 
+<<<<<<< HEAD
 namespace Nette\Http;
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 /**
  * Extended HTTP URL.
@@ -64,8 +67,13 @@ class UrlScript extends Url
 	 */
 	public function getBasePath(): string
 	{
+<<<<<<< HEAD
 		$pos = strrpos($this->getScriptPath(), '/');
 		return $pos === false ? '' : substr($this->getPath(), 0, $pos + 1);
+=======
+		$pos = strrpos($this->scriptPath, '/');
+		return $pos === FALSE ? '' : substr($this->getPath(), 0, $pos + 1);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 
 
@@ -74,6 +82,10 @@ class UrlScript extends Url
 	 */
 	public function getPathInfo(): string
 	{
+<<<<<<< HEAD
 		return (string) substr($this->getPath(), strlen($this->getScriptPath()));
+=======
+		return (string) substr($this->getPath(), strlen($this->scriptPath));
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 }

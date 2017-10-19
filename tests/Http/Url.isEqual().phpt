@@ -4,8 +4,11 @@
  * Test: Nette\Http\Url::isEqual()
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\Url;
 use Tester\Assert;
 
@@ -47,9 +50,12 @@ Assert::true($url->isEqual('http://example.com'));
 
 $url = new Url('ftp://user:pass@example.com');
 Assert::false($url->isEqual('ftp://example.com'));
+<<<<<<< HEAD
 
 
 $url = new Url;
 $url->setScheme('http');
 $url->setHost('example.com');
 Assert::true($url->isEqual('http://example.com'));
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1

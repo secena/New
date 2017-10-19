@@ -116,9 +116,15 @@ class UserStorage implements Nette\Security\IUserStorage
 
 	/**
 	 * Enables log out after inactivity.
+<<<<<<< HEAD
 	 * @param  string|null like '20 minutes'
 	 * @param  int  flag IUserStorage::CLEAR_IDENTITY
 	 * @return static
+=======
+	 * @param  string|int|\DateTime Number of seconds or timestamp
+	 * @param  int Log out when the browser is closed | Clear the identity from persistent storage?
+	 * @return self
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function setExpiration($time, int $flags = 0)
 	{
@@ -143,6 +149,10 @@ class UserStorage implements Nette\Security\IUserStorage
 
 	/**
 	 * Why was user logged out?
+<<<<<<< HEAD
+=======
+	 * @return int|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function getLogoutReason(): ?int
 	{

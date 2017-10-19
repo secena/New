@@ -4,8 +4,11 @@
  * Test: Nette\Http\Request files.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http;
 use Tester\Assert;
 
@@ -102,6 +105,7 @@ $_FILES = [
 $factory = new Http\RequestFactory;
 $request = $factory->createHttpRequest();
 
+<<<<<<< HEAD
 Assert::type(Nette\Http\FileUpload::class, $request->files['file1']);
 Assert::type(Nette\Http\FileUpload::class, $request->files['file2'][2]);
 Assert::type(Nette\Http\FileUpload::class, $request->files['file3']['y']['z']);
@@ -112,3 +116,17 @@ Assert::true(isset($request->files['file1']));
 
 Assert::null($request->getFile('empty1'));
 Assert::same([null], $request->getFile('empty2'));
+=======
+Assert::type('Nette\Http\FileUpload', $request->files['file1']);
+Assert::type('Nette\Http\FileUpload', $request->files['file2'][2]);
+Assert::type('Nette\Http\FileUpload', $request->files['file3']['y']['z']);
+Assert::type('Nette\Http\FileUpload', $request->files['file3'][1]);
+
+Assert::false(isset($request->files['file0']));
+Assert::true(isset($request->files['file1']));
+
+Assert::null($request->getFile('file1', 'a'));
+
+Assert::null($request->getFile('empty1'));
+Assert::same(array(NULL), $request->getFile('empty2'));
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1

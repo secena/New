@@ -7,8 +7,11 @@
 
 declare(strict_types=1);
 
+<<<<<<< HEAD
 namespace Nette\Http;
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 /**
  * IHttpResponse interface.
@@ -22,10 +25,16 @@ interface IResponse
 	public const BROWSER = 0;
 
 	/** HTTP 1.1 response code */
+<<<<<<< HEAD
 	public const
 		S100_CONTINUE = 100,
 		S101_SWITCHING_PROTOCOLS = 101,
 		S102_PROCESSING = 102,
+=======
+	const
+		S100_CONTINUE = 100,
+		S101_SWITCHING_PROTOCOLS = 101,
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		S200_OK = 200,
 		S201_CREATED = 201,
 		S202_ACCEPTED = 202,
@@ -33,9 +42,12 @@ interface IResponse
 		S204_NO_CONTENT = 204,
 		S205_RESET_CONTENT = 205,
 		S206_PARTIAL_CONTENT = 206,
+<<<<<<< HEAD
 		S207_MULTI_STATUS = 207,
 		S208_ALREADY_REPORTED = 208,
 		S226_IM_USED = 226,
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		S300_MULTIPLE_CHOICES = 300,
 		S301_MOVED_PERMANENTLY = 301,
 		S302_FOUND = 302,
@@ -44,7 +56,10 @@ interface IResponse
 		S304_NOT_MODIFIED = 304,
 		S305_USE_PROXY = 305,
 		S307_TEMPORARY_REDIRECT = 307,
+<<<<<<< HEAD
 		S308_PERMANENT_REDIRECT = 308,
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		S400_BAD_REQUEST = 400,
 		S401_UNAUTHORIZED = 401,
 		S402_PAYMENT_REQUIRED = 402,
@@ -63,6 +78,7 @@ interface IResponse
 		S415_UNSUPPORTED_MEDIA_TYPE = 415,
 		S416_REQUESTED_RANGE_NOT_SATISFIABLE = 416,
 		S417_EXPECTATION_FAILED = 417,
+<<<<<<< HEAD
 		S421_MISDIRECTED_REQUEST = 421,
 		S422_UNPROCESSABLE_ENTITY = 422,
 		S423_LOCKED = 423,
@@ -72,17 +88,24 @@ interface IResponse
 		S429_TOO_MANY_REQUESTS = 429,
 		S431_REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
 		S451_UNAVAILABLE_FOR_LEGAL_REASONS = 451,
+=======
+		S426_UPGRADE_REQUIRED = 426,
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		S500_INTERNAL_SERVER_ERROR = 500,
 		S501_NOT_IMPLEMENTED = 501,
 		S502_BAD_GATEWAY = 502,
 		S503_SERVICE_UNAVAILABLE = 503,
 		S504_GATEWAY_TIMEOUT = 504,
+<<<<<<< HEAD
 		S505_HTTP_VERSION_NOT_SUPPORTED = 505,
 		S506_VARIANT_ALSO_NEGOTIATES = 506,
 		S507_INSUFFICIENT_STORAGE = 507,
 		S508_LOOP_DETECTED = 508,
 		S510_NOT_EXTENDED = 510,
 		S511_NETWORK_AUTHENTICATION_REQUIRED = 511;
+=======
+		S505_HTTP_VERSION_NOT_SUPPORTED = 505;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 	/**
 	 * Sets HTTP response code.
@@ -120,8 +143,13 @@ interface IResponse
 
 	/**
 	 * Sets the number of seconds before a page cached on a browser expires.
+<<<<<<< HEAD
 	 * @param  string|null like '20 minutes', null means "must-revalidate"
 	 * @return static
+=======
+	 * @param  string|int|\DateTime  time, value 0 means "until the browser is closed"
+	 * @return void
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function setExpiration($seconds);
 
@@ -136,7 +164,12 @@ interface IResponse
 	function getHeader(string $header): ?string;
 
 	/**
+<<<<<<< HEAD
 	 * Returns a associative array of headers to sent.
+=======
+	 * Returns a list of headers to sent.
+	 * @return array (name => value)
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function getHeaders(): array;
 

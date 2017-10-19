@@ -4,8 +4,11 @@
  * Test: Nette\Http\Url canonicalize.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\Url;
 use Tester\Assert;
 
@@ -15,6 +18,7 @@ require __DIR__ . '/../bootstrap.php';
 
 $url = new Url('http://hostname/path?arg=value&arg2=v%20a%26l%3Du%2Be');
 $url->canonicalize();
+<<<<<<< HEAD
 Assert::same('http://hostname/path?arg=value&arg2=v%20a%26l%3Du%2Be', (string) $url);
 
 
@@ -30,3 +34,11 @@ $url->canonicalize();
 Assert::same('http://host/%1F%20%20!!%22%22%23$$%25&&\'\'(())**++,,--..%2F/00112233445566778899::;;%3C%3C==%3E%3E%3F@@'
 	. 'AABBCCDDEEFFGGHHIIJJKKLLMMNNOOPPQQRRSSTTUUVVWWXXYYZZ%5B%5B%5C%5C%5D%5D%5E%5E__%60%60'
 	. 'aabbccddeeffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz%7B%7B%7C%7C%7D%7D~~%7F%C3%A1', (string) $url);
+=======
+Assert::same('http://hostname/path?arg=value&arg2=v a%26l%3Du%2Be', (string) $url);
+
+
+$url = new Url('http://username%3A:password%3A@hostN%61me:60/p%61th%2f%25%23%3F()?arg=value&arg2=v%20a%26l%3Du%2B%23e#%61nchor');
+$url->canonicalize();
+Assert::same('http://hostname:60/path%2F%25%23%3F()?arg=value&arg2=v a%26l%3Du%2B%23e#%61nchor', (string) $url);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1

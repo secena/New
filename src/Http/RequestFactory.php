@@ -21,7 +21,11 @@ class RequestFactory
 	use Nette\SmartObject;
 
 	/** @internal */
+<<<<<<< HEAD
 	private const CHARS = '\x09\x0A\x0D\x20-\x7E\xA0-\x{10FFFF}';
+=======
+	const CHARS = '\x09\x0A\x0D\x20-\x7E\xA0-\x{10FFFF}';
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 	/** @var array */
 	public $urlFilters = [
@@ -65,8 +69,13 @@ class RequestFactory
 		// DETECTS URI, base path and script path of the request.
 		$url = new UrlScript;
 		$url->setScheme(!empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'off') ? 'https' : 'http');
+<<<<<<< HEAD
 		$url->setUser($_SERVER['PHP_AUTH_USER'] ?? '');
 		$url->setPassword($_SERVER['PHP_AUTH_PW'] ?? '');
+=======
+		$url->setUser(isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : '');
+		$url->setPassword(isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : '');
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 		// host & port
 		if ((isset($_SERVER[$tmp = 'HTTP_HOST']) || isset($_SERVER[$tmp = 'SERVER_NAME']))
@@ -74,9 +83,15 @@ class RequestFactory
 		) {
 			$url->setHost(strtolower($pair[1]));
 			if (isset($pair[2])) {
+<<<<<<< HEAD
 				$url->setPort((int) substr($pair[2], 1));
 			} elseif (isset($_SERVER['SERVER_PORT'])) {
 				$url->setPort((int) $_SERVER['SERVER_PORT']);
+=======
+				$url->setPort(substr($pair[2], 1));
+			} elseif (isset($_SERVER['SERVER_PORT'])) {
+				$url->setPort($_SERVER['SERVER_PORT']);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 			}
 		}
 
@@ -85,6 +100,7 @@ class RequestFactory
 		$requestUrl = preg_replace('#^\w++://[^/]++#', '', $requestUrl);
 		$requestUrl = Strings::replace($requestUrl, $this->urlFilters['url']);
 		$tmp = explode('?', $requestUrl, 2);
+<<<<<<< HEAD
 		$path = Url::unescape($tmp[0], '%/?#');
 		$path = Strings::fixEncoding(Strings::replace($path, $this->urlFilters['path']));
 		$url->setPath($path);
@@ -97,16 +113,57 @@ class RequestFactory
 			$max = min(strlen($lpath), strlen($script));
 			for ($i = 0; $i < $max && $lpath[$i] === $script[$i]; $i++);
 			$path = $i ? substr($path, 0, strrpos($path, '/', $i - strlen($path) - 1) + 1) : '/';
+=======
+		$url->setPath(Strings::replace($tmp[0], $this->urlFilters['path']));
+		$url->setQuery(isset($tmp[1]) ? $tmp[1] : '');
+
+		// normalized url
+		$url->canonicalize();
+		$url->setPath(Strings::fixEncoding($url->getPath()));
+
+		// detect script path
+		if (isset($_SERVER['SCRIPT_NAME'])) {
+			$script = $_SERVER['SCRIPT_NAME'];
+		} elseif (isset($_SERVER['DOCUMENT_ROOT'], $_SERVER['SCRIPT_FILENAME'])
+			&& strncmp($_SERVER['DOCUMENT_ROOT'], $_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT'])) === 0
+		) {
+			$script = '/' . ltrim(strtr(substr($_SERVER['SCRIPT_FILENAME'], strlen($_SERVER['DOCUMENT_ROOT'])), '\\', '/'), '/');
+		} else {
+			$script = '/';
+		}
+
+		$path = strtolower($url->getPath()) . '/';
+		$script = strtolower($script) . '/';
+		$max = min(strlen($path), strlen($script));
+		for ($i = 0; $i < $max; $i++) {
+			if ($path[$i] !== $script[$i]) {
+				break;
+			} elseif ($path[$i] === '/') {
+				$url->setScriptPath(substr($url->getPath(), 0, $i + 1));
+			}
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}
 		$url->setScriptPath($path);
 
 		// GET, POST, COOKIE
+<<<<<<< HEAD
 		$useFilter = (!in_array(ini_get('filter.default'), ['', 'unsafe_raw'], true) || ini_get('filter.default_flags'));
+=======
+		$useFilter = (!in_array(ini_get('filter.default'), array('', 'unsafe_raw')) || ini_get('filter.default_flags'));
+
+		parse_str($url->getQuery(), $query);
+		if (!$query) {
+			$query = $useFilter ? filter_input_array(INPUT_GET, FILTER_UNSAFE_RAW) : (empty($_GET) ? array() : $_GET);
+		}
+		$post = $useFilter ? filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) : (empty($_POST) ? array() : $_POST);
+		$cookies = $useFilter ? filter_input_array(INPUT_COOKIE, FILTER_UNSAFE_RAW) : (empty($_COOKIE) ? array() : $_COOKIE);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 		$query = $url->getQueryParameters();
 		$post = $useFilter ? filter_input_array(INPUT_POST, FILTER_UNSAFE_RAW) : (empty($_POST) ? [] : $_POST);
 		$cookies = $useFilter ? filter_input_array(INPUT_COOKIE, FILTER_UNSAFE_RAW) : (empty($_COOKIE) ? [] : $_COOKIE);
 
+<<<<<<< HEAD
 		// remove invalid characters
 		$reChars = '#^[' . self::CHARS . ']*+\z#u';
 		if (!$this->binary) {
@@ -115,13 +172,39 @@ class RequestFactory
 				foreach ($val as $k => $v) {
 					if (is_string($k) && (!preg_match($reChars, $k) || preg_last_error())) {
 						unset($list[$key][$k]);
+=======
+		// remove fucking quotes, control characters and check encoding
+		$reChars = '#^[' . self::CHARS . ']*+\z#u';
+		if ($gpc || !$this->binary) {
+			$list = array(& $query, & $post, & $cookies);
+			while (list($key, $val) = each($list)) {
+				foreach ($val as $k => $v) {
+					unset($list[$key][$k]);
+
+					if ($gpc) {
+						$k = stripslashes($k);
+					}
+
+					if (!$this->binary && is_string($k) && (!preg_match($reChars, $k) || preg_last_error())) {
+						// invalid key -> ignore
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 					} elseif (is_array($v)) {
 						$list[$key][$k] = $v;
 						$list[] = &$list[$key][$k];
 
 					} else {
+<<<<<<< HEAD
 						$list[$key][$k] = (string) preg_replace('#[^' . self::CHARS . ']+#u', '', $v);
+=======
+						if ($gpc && !$useFilter) {
+							$v = stripSlashes($v);
+						}
+						if (!$this->binary) {
+							$v = (string) preg_replace('#[^' . self::CHARS . ']+#u', '', $v);
+						}
+						$list[$key][$k] = $v;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 					}
 				}
 			}
@@ -135,9 +218,13 @@ class RequestFactory
 		$list = [];
 		if (!empty($_FILES)) {
 			foreach ($_FILES as $k => $v) {
+<<<<<<< HEAD
 				if (!is_array($v) || !isset($v['name'], $v['type'], $v['size'], $v['tmp_name'], $v['error'])
 					|| (!$this->binary && is_string($k) && (!preg_match($reChars, $k) || preg_last_error()))
 				) {
+=======
+				if (!$this->binary && is_string($k) && (!preg_match($reChars, $k) || preg_last_error())) {
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 					continue;
 				}
 				$v['@'] = &$files[$k];
@@ -150,6 +237,12 @@ class RequestFactory
 				continue;
 
 			} elseif (!is_array($v['name'])) {
+<<<<<<< HEAD
+=======
+				if ($gpc) {
+					$v['name'] = stripSlashes($v['name']);
+				}
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 				if (!$this->binary && (!preg_match($reChars, $v['name']) || preg_last_error())) {
 					$v['name'] = '';
 				}
@@ -186,7 +279,11 @@ class RequestFactory
 				} elseif (strncmp($k, 'CONTENT_', 8)) {
 					continue;
 				}
+<<<<<<< HEAD
 				$headers[strtr($k, '_', '-')] = $v;
+=======
+				$headers[ strtr($k, '_', '-') ] = $v;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 			}
 		}
 
@@ -214,6 +311,7 @@ class RequestFactory
 					}
 				}
 
+<<<<<<< HEAD
 				if (isset($proxyParams['host']) && count($proxyParams['host']) === 1) {
 					$host = $proxyParams['host'][0];
 					$startingDelimiterPosition = strpos($host, '[');
@@ -256,6 +354,21 @@ class RequestFactory
 				}
 
 				if (isset($xForwardedForRealIpKey) && !empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+=======
+		// proxy
+		foreach ($this->proxies as $proxy) {
+			if (Helpers::ipMatch($remoteAddr, $proxy) && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+				$proxies = $this->proxies;
+				$xForwardedForWithoutProxies = array_filter(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']), function ($ip) use ($proxies) {
+					return !array_filter($proxies, function ($proxy) use ($ip) {
+						return Helpers::ipMatch(trim($ip), $proxy);
+					});
+				});
+				$remoteAddr = trim(end($xForwardedForWithoutProxies));
+
+				if (!empty($_SERVER['HTTP_X_FORWARDED_HOST'])) {
+					$xForwardedForRealIpKey = key($xForwardedForWithoutProxies);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 					$xForwardedHost = explode(',', $_SERVER['HTTP_X_FORWARDED_HOST']);
 					if (isset($xForwardedHost[$xForwardedForRealIpKey])) {
 						$remoteHost = trim($xForwardedHost[$xForwardedForRealIpKey]);

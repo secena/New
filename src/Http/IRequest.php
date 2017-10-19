@@ -7,8 +7,11 @@
 
 declare(strict_types=1);
 
+<<<<<<< HEAD
 namespace Nette\Http;
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 /**
  * IHttpRequest provides access scheme for request sent via HTTP.
@@ -48,7 +51,12 @@ interface IRequest
 
 	/**
 	 * Returns uploaded file.
+<<<<<<< HEAD
 	 * @return FileUpload|array|null
+=======
+	 * @param  string key (or more keys)
+	 * @return FileUpload|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function getFile(string $key);
 
@@ -103,16 +111,28 @@ interface IRequest
 
 	/**
 	 * Returns the IP address of the remote client.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function getRemoteAddress(): ?string;
 
 	/**
 	 * Returns the host of the remote client.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function getRemoteHost(): ?string;
 
 	/**
 	 * Returns raw content of HTTP request body.
+<<<<<<< HEAD
+=======
+	 * @return string|NULL
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	function getRawBody(): ?string;
 }

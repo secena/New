@@ -4,8 +4,11 @@
  * Test: Nette\Http\Url unescape.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\Url;
 use Tester\Assert;
 

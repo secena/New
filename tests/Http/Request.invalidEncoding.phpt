@@ -4,8 +4,11 @@
  * Test: Nette\Http\Request invalid encoding.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http;
 use Tester\Assert;
 
@@ -62,8 +65,13 @@ $_FILES = [
 		'tmp_name' => 'C:\\PHP\\temp\\php1D5B.tmp',
 		'error' => 0,
 		'size' => 209,
+<<<<<<< HEAD
 	],
 ];
+=======
+	),
+);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 test(function () { // unfiltered data
 	$factory = new Http\RequestFactory;
@@ -88,9 +96,15 @@ test(function () { // unfiltered data
 	Assert::same('1', $request->getCookie(CONTROL_CHARACTERS));
 	Assert::same('1', $request->cookies['array'][INVALID]);
 
+<<<<<<< HEAD
 	Assert::type(Nette\Http\FileUpload::class, $request->getFile(INVALID));
 	Assert::type(Nette\Http\FileUpload::class, $request->getFile(CONTROL_CHARACTERS));
 	Assert::type(Nette\Http\FileUpload::class, $request->files['file1']);
+=======
+	Assert::type('Nette\Http\FileUpload', $request->getFile(INVALID));
+	Assert::type('Nette\Http\FileUpload', $request->getFile(CONTROL_CHARACTERS));
+	Assert::type('Nette\Http\FileUpload', $request->files['file1']);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 });
 
 
@@ -118,6 +132,10 @@ test(function () { // filtered data
 
 	Assert::null($request->getFile(INVALID));
 	Assert::null($request->getFile(CONTROL_CHARACTERS));
+<<<<<<< HEAD
 	Assert::type(Nette\Http\FileUpload::class, $request->files['file1']);
+=======
+	Assert::type('Nette\Http\FileUpload', $request->files['file1']);
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	Assert::same('', $request->files['file1']->name);
 });

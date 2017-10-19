@@ -4,8 +4,11 @@
  * Test: Nette\Http\RequestFactory scriptPath detection.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
 
+=======
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 use Nette\Http\RequestFactory;
 use Tester\Assert;
 
@@ -16,7 +19,11 @@ require __DIR__ . '/../bootstrap.php';
 $factory = new RequestFactory;
 
 test(function () use ($factory) {
+<<<<<<< HEAD
 	$_SERVER = [
+=======
+	$_SERVER = array(
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		'REQUEST_URI' => '/projects/modules-usage/www/',
 		'SCRIPT_NAME' => '/projects/modules-usage/www/index.php',
 	];
@@ -36,7 +43,11 @@ test(function () use ($factory) {
 
 
 test(function () use ($factory) {
+<<<<<<< HEAD
 	$_SERVER = [
+=======
+	$_SERVER = array(
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		'REQUEST_URI' => '/projects/modules-usage/www/default/add-item',
 		'SCRIPT_NAME' => '/projects/modules-usage/www/index.php',
 	];
@@ -46,7 +57,11 @@ test(function () use ($factory) {
 
 
 test(function () use ($factory) {
+<<<<<<< HEAD
 	$_SERVER = [
+=======
+	$_SERVER = array(
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		'REQUEST_URI' => '/www/index.php',
 		'SCRIPT_NAME' => '/www/index.php',
 	];
@@ -56,7 +71,11 @@ test(function () use ($factory) {
 
 
 test(function () use ($factory) {
+<<<<<<< HEAD
 	$_SERVER = [
+=======
+	$_SERVER = array(
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		'REQUEST_URI' => '/www/',
 		'SCRIPT_NAME' => '/www/',
 	];
@@ -162,5 +181,9 @@ test(function () use ($factory) {
 		'SCRIPT_NAME' => '/index.php',
 	];
 
+<<<<<<< HEAD
 	Assert::same('/', $factory->createHttpRequest()->getUrl()->getScriptPath());
+=======
+	Assert::same('/www/', $factory->createHttpRequest()->getUrl()->getScriptPath());
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 });

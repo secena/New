@@ -14,6 +14,11 @@ use Nette;
 
 /**
  * Provides access to session sections as well as session settings and management methods.
+<<<<<<< HEAD
+=======
+ *
+ * @author     David Grudl
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
  */
 class Session
 {
@@ -78,20 +83,33 @@ class Session
 		$this->configure($this->options);
 
 		$id = $this->request->getCookie(session_name());
+<<<<<<< HEAD
 		if (is_string($id) && preg_match('#^[0-9a-zA-Z,-]{22,256}\z#i', $id)) {
+=======
+		if (is_string($id) && preg_match('#^[0-9a-zA-Z,-]{22,128}\z#i', $id)) {
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 			session_id($id);
 		} else {
 			unset($_COOKIE[session_name()]);
 		}
 
 		try {
+<<<<<<< HEAD
 			// session_start returns false on failure only sometimes
 			Nette\Utils\Callback::invokeSafe('session_start', [], function ($message) use (&$e) {
+=======
+		// session_start returns FALSE on failure only sometimes
+			Nette\Utils\Callback::invokeSafe('session_start', array(), function ($message) use (& $e) {
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 				$e = new Nette\InvalidStateException($message);
 			});
 		} catch (\Exception $e) {
 		}
 
+<<<<<<< HEAD
+=======
+		$this->response->removeDuplicateCookies();
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		if ($e) {
 			@session_write_close(); // this is needed
 			throw $e;
@@ -102,7 +120,11 @@ class Session
 		/* structure:
 			__NF: Data, Meta, Time
 				DATA: section->variable = data
+<<<<<<< HEAD
 				META: section->variable = Timestamp
+=======
+				META: section->variable = Timestamp, Browser
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		*/
 		$nf = &$_SESSION['__NF'];
 
@@ -113,7 +135,17 @@ class Session
 		// regenerate empty session
 		if (empty($nf['Time'])) {
 			$nf['Time'] = time();
+<<<<<<< HEAD
 			$this->regenerated = true;
+=======
+			$this->regenerated = TRUE;
+		}
+
+		// browser closing detection
+		$browserKey = $this->request->getCookie('nette-browser');
+		if (!is_string($browserKey) || !preg_match('#^[0-9a-z]{10}\z#', $browserKey)) {
+			$browserKey = Nette\Utils\Random::generate();
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		}
 
 		// resend cookie
@@ -207,10 +239,17 @@ class Session
 			if (headers_sent($file, $line)) {
 				throw new Nette\InvalidStateException('Cannot regenerate session ID after HTTP headers have been sent' . ($file ? " (output started at $file:$line)." : '.'));
 			}
+<<<<<<< HEAD
 			if (session_status() === PHP_SESSION_ACTIVE) {
 				session_regenerate_id(true);
 				session_write_close();
 			}
+=======
+			if (session_id() !== '') {
+				session_regenerate_id(TRUE);
+			}
+			session_write_close();
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 			$backup = $_SESSION;
 			session_start();
 			$_SESSION = $backup;
@@ -368,6 +407,11 @@ class Session
 
 	/**
 	 * Configures session environment.
+<<<<<<< HEAD
+=======
+	 * @param  array
+	 * @return void
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	private function configure(array $config): void
 	{
@@ -384,8 +428,13 @@ class Session
 				$cookie[substr($key, 7)] = $value;
 
 			} else {
+<<<<<<< HEAD
 				if (session_status() === PHP_SESSION_ACTIVE) {
 					throw new Nette\InvalidStateException("Unable to set 'session.$key' to value '$value' when session has been started" . (self::$started ? '.' : ' by session.auto_start or session_start().'));
+=======
+				if (defined('SID')) {
+					throw new Nette\InvalidStateException("Unable to set 'session.$key' to value '$value' when session has been started" . ($this->started ? '.' : ' by session.auto_start or session_start().'));
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 				}
 				if (isset($special[$key])) {
 					$key = "session_$key";
@@ -418,8 +467,13 @@ class Session
 
 	/**
 	 * Sets the amount of time allowed between requests before the session will be terminated.
+<<<<<<< HEAD
 	 * @param  string|null like '20 minutes', null means "until the browser is closed"
 	 * @return static
+=======
+	 * @param  string|int|\DateTime  time, value 0 means "until the browser is closed"
+	 * @return self
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	 */
 	public function setExpiration($time)
 	{
@@ -449,7 +503,11 @@ class Session
 			'cookie_path' => $path,
 			'cookie_domain' => $domain,
 			'cookie_secure' => $secure,
+<<<<<<< HEAD
 		]);
+=======
+		));
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 
 
@@ -470,7 +528,28 @@ class Session
 	{
 		return $this->setOptions([
 			'save_path' => $path,
+<<<<<<< HEAD
 		]);
+=======
+		));
+	}
+
+
+	/**
+	 * Sets user session storage for PHP < 5.4. For PHP >= 5.4, use setHandler().
+	 * @return self
+	 */
+	public function setStorage(ISessionStorage $storage)
+	{
+		if (self::$started) {
+			throw new Nette\InvalidStateException('Unable to set storage when session has been started.');
+		}
+		session_set_save_handler(
+			array($storage, 'open'), array($storage, 'close'), array($storage, 'read'),
+			array($storage, 'write'), array($storage, 'remove'), array($storage, 'clean')
+		);
+		return $this;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 	}
 
 
@@ -498,6 +577,13 @@ class Session
 			session_name(), session_id(),
 			$cookie['lifetime'] ? $cookie['lifetime'] + time() : 0,
 			$cookie['path'], $cookie['domain'], $cookie['secure'], $cookie['httponly']
+<<<<<<< HEAD
+=======
+		);
+		$this->response->setCookie(
+			'nette-browser', $_SESSION['__NF']['B'],
+			Response::BROWSER, $cookie['path'], $cookie['domain']
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 		);
 	}
 }

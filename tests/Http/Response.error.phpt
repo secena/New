@@ -4,7 +4,12 @@
  * Test: Nette\Http\Response errors.
  */
 
+<<<<<<< HEAD
 declare(strict_types=1);
+=======
+use Nette\Http;
+use Tester\Assert;
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
 
 use Nette\Http;
 use Tester\Assert;
@@ -22,6 +27,7 @@ $response->setHeader('A', 'b'); // full buffer
 ob_end_clean();
 
 
+<<<<<<< HEAD
 if (PHP_SAPI === 'cli') {
 	Assert::noError(function () use ($response) {
 		ob_start(null, 4096);
@@ -51,3 +57,20 @@ if (PHP_SAPI === 'cli') {
 		$response->setHeader('A', 'b');
 	}, Nette\InvalidStateException::class, 'Cannot send header after HTTP headers have been sent (output started at ' . __FILE__ . ':' . (__LINE__ - 2) . ').');
 }
+=======
+Assert::error(function () use ($response) {
+	ob_start(NULL, 4096);
+	echo '  ';
+	$response->setHeader('A', 'b');
+}, E_USER_NOTICE, 'Possible problem: you are sending a HTTP header while already having some data in output buffer%a%');
+
+
+$response->warnOnBuffer = FALSE;
+$response->setHeader('A', 'b');
+
+
+Assert::exception(function () use ($response) {
+	ob_flush();
+	$response->setHeader('A', 'b');
+}, 'Nette\InvalidStateException', 'Cannot send header after HTTP headers have been sent (output started at ' . __FILE__ . ':' . (__LINE__ - 2) . ').');
+>>>>>>> 252926673fbd6de211a39a1f51e16bcfeefff1e1
